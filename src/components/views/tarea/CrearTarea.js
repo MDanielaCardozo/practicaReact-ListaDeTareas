@@ -51,7 +51,9 @@ const CrearTarea = () => {
     };
 
   return (
-    <div>
+    <div className="container">
+      <h1 className="display-4 mt-5">Nueva tarea</h1>
+      <hr />
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Control type="text" placeholder="Ingrese tarea" onChange={(e) => setNombreTarea(e.target.value)}/>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { cantidadCaracteres } from './helpers';
 
 const EditarTarea = () => {
@@ -41,14 +42,48 @@ const EditarTarea = () => {
                 nombreTarea: nombreTareaRef.current.value
             }
             console.log(tareaEditar);
-        }
-        
+
+            try {
+                const resp = await fetch(`${URL}/${id}`,{
+                    method: "PUT",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body: JSON.stringify(tareaEditar)
+                    })
+                    if(resp.status === 200){
+                        Swal.fire(
+                            'Tarea editada!',
+                            'Su tarea fue correctamente editada',
+                            'success'
+                          );
+                          //redirecciono a la pagina de tareas
+                          navegacion('/administrar');
+                    }
+            } catch (error) {
+                console.log(error)
+                //mostrar un mensaje al usuario
+            }
+            //redireccionar a la web de la tabla de tareas
+        }else{
+            //mostrar un mensaje de error de validacion de datos del usuario
+        }        
       }
 
     return (
-        <div>
-            
-        </div>
+        <div className="container">
+      <h1 className="display-4 mt-5">Nueva tarea</h1>
+      <hr />
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId='formNombreTarea'>
+          <Form.Label>Tarea*</Form.Label>  
+          <Form.Control type="text" placeholder="Ingrese tarea" defaultValue={tarea.nombreTarea} ref={nombreTareaRef}/>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Guardar
+        </Button>
+      </Form>
+    </div>
     );
 };
 

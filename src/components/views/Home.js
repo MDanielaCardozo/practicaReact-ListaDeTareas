@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { ListGroup } from 'react-bootstrap';
-import ItemTarea from './tareas/ItemTarea';
+import ItemTarea from './tarea/ItemTarea';
 
 const Home = () => {
     const URL = process.env.REACT_APP_API_TAREAS;
